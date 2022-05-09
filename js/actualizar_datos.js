@@ -8,7 +8,7 @@ const cambiarEstatusStaging = (id, check) => {
 
     staging.get().then((doc) => {
       if (doc.exists) {
-        if (user.email !== doc.data().desarrollador_email) {
+        if (user.email !== doc.data().desarrollador_email && doc.data().en_uso) {
           swich_btn = document.querySelector(`#${check}`);
           console.log(swich_btn);
           swich_btn.checked = true;
@@ -30,6 +30,7 @@ const cambiarEstatusStaging = (id, check) => {
           staging.set({
             en_uso: true,
             desarrollador: user.displayName,
+            desarrollador_email: user.email,
             imagen: user.photoURL
           }, { merge: true });
         }
