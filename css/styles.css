@@ -48,13 +48,15 @@
 html,
 body {
 	width: 100%;
-	height: 100vh;
+	/* height: 100vh; */
+	height: auto;
 	margin: 0;
 }
 
 body {
 	font-family: 'DM Sans', sans-serif;
-	overflow: hidden;
+	/* overflow: hidden; */
+	overflow-y: auto;
 	display: flex;
 	justify-content: center;
 	background-color: var(--app-container);
@@ -343,6 +345,16 @@ a {
 	border: 1px solid var(--secondary-color);
 }
 
+.item-status:not(:last-child) .activo:after {
+	border: 1px solid #c8f7dc;
+	background-color: #c8f7dc;
+}
+
+.item-status:not(:last-child) .inactivo:after {
+	border: 1px solid #80808024;
+	background-color: #80808024;
+}
+
 .status-number {
 	font-size: 24px;
 	line-height: 32px;
@@ -543,7 +555,7 @@ a {
 
 .project-boxes.jsListView .project-box-content-header {
 	order: 1;
-	max-width: 120px;
+	width: auto;
 }
 
 .project-boxes.jsListView .project-box-header {
@@ -589,6 +601,7 @@ a {
 	border-radius: 30px;
 	padding: 16px;
 	background-color: var(--main-color-card);
+	height: 100%;
 }
 
 .project-box-header {
@@ -699,16 +712,6 @@ a {
 	position: relative;
 }
 
-.project-box-footer:after {
-	content: '';
-	position: absolute;
-	background-color: rgba(255, 255, 255, 0.6);
-	width: calc(100% + 32px);
-	top: 0;
-	left: -16px;
-	height: 1px;
-}
-
 .participants {
 	display: flex;
 	align-items: center;
@@ -749,6 +752,25 @@ a {
 	font-weight: 700;
 }
 
+.delete-content {
+	background-color: rgba(255, 255, 255, 0.6);
+	font-size: 12px;
+	border-radius: 5px;
+	flex-shrink: 0;
+	padding: 4px 19px;
+	font-weight: 700;
+	position: relative;
+	width: 100%;
+	height: 2.2rem;
+	right: 12px;
+}
+
+.delete-content svg {
+	position: absolute;
+	top: 25%;
+	right: 28%;
+}
+
 .mode-switch.active .moon {
 	fill: var(--main-color);
 }
@@ -766,6 +788,119 @@ a {
 	align-items: center;
 	padding: 4px;
 	display: none;
+}
+
+.form-switch .form-check-input {
+	width: 3rem;
+	height: 1.5rem;
+	box-shadow: none;
+}
+
+.form-check-input:checked {
+	background-color: #34c47187;
+	border-color: #34c47187;
+	box-shadow: none;
+}
+
+.modal-content {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	pointer-events: auto;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 0px;
+	border-radius: 30px;
+	min-height: 20rem;
+	outline: 0;
+}
+
+.btn-primary {
+	color: #fff;
+	background-color: var(--button-bg);
+	border-color: var(--button-bg);
+	min-width: 8rem;
+	border-radius: 30px;
+}
+
+.btn-primary:hover,
+.btn-primary::selection,
+.btn-primary:focus {
+	box-shadow: none;
+	background-color: var(--button-bg);
+	border-color: var(--button-bg);
+}
+.swal2-styled.swal2-confirm {
+	border: 0;
+	border-radius: 30px !important;
+	background: initial;
+	background-color: var(--button-bg) !important;
+	color: #fff;
+	font-size: 1em;
+	box-shadow: none;
+}
+.swal2-styled.swal2-cancel {
+	border-radius: 30px !important;
+	background: initial;
+	color: #fff;
+	font-size: 1em;
+}
+.swal2-styled.swal2-confirm::selection,
+.swal2-styled.swal2-confirm:focus,
+.swal2-styled.swal2-cancel::selection,
+.swal2-styled.swal2-cancel:focus {
+	box-shadow: none;
+	border: 0px;
+}
+
+.swal2-title {
+	font-weight: 500;
+}
+
+.swal2-popup {
+	border-radius: 30px !important;
+}
+
+.dropdown-menu {
+	position: absolute;
+	z-index: 1000;
+	display: none;
+	min-width: 100%;
+	padding: 0.5rem 0;
+	margin: 0;
+	font-size: 1rem;
+	color: #212529;
+	text-align: left;
+	list-style: none;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 0px;
+	border-radius: 0.25rem;
+	box-shadow: 0px 3px 35px 0px rgb(0 0 0 / 14%);
+	top: 10px !important;
+}
+.project-activo {
+	background-color: #34c4712e;
+}
+
+.project-inactivo {
+	background-color: #80808024;
+}
+
+/* Dark */
+.dark .project-box-content-header,
+.dark .project-box-footer span,
+.dark .delete-content svg {
+	color: #fff;
+	fill: #fff;
+}
+
+.dark .project-activo {
+	background-color: #b5b5b524;
+}
+.dark .project-inactivo {
+	background-color: #ffffff63;
 }
 
 @media screen and (max-width: 980px) {
@@ -831,9 +966,12 @@ a {
 		padding: 16px 12px 24px 12px;
 	}
 
-	.status-number,
 	.status-type {
 		font-size: 10px;
+	}
+
+	.status-number {
+		font-size: 20px;
 	}
 
 	.view-btn {
@@ -846,7 +984,7 @@ a {
 	}
 
 	.search-input {
-		max-width: 120px;
+		max-width: 100%;
 	}
 
 	.project-boxes.jsGridView .project-box-wrapper {
@@ -888,12 +1026,12 @@ a {
 	}
 
 	.box-content-header {
-		font-size: 12px;
-		line-height: 16px;
+		font-size: 16px;
+		line-height: 30px;
 	}
 
 	.box-content-subheader {
-		font-size: 12px;
+		font-size: 16px;
 		line-height: 16px;
 	}
 
@@ -902,7 +1040,7 @@ a {
 	}
 
 	.box-progress-header {
-		font-size: 12px;
+		font-size: 16px;
 	}
 
 	.box-progress-percentage {
@@ -918,9 +1056,15 @@ a {
 	.project-boxes.jsListView .project-box > * {
 		margin-right: 10px;
 	}
+	.project-boxes.jsListView .project-box-content-header {
+		order: 1;
+		width: auto;
+		max-width: 8rem;
+	}
 
 	.project-boxes.jsListView .more-wrapper {
-		right: 2px;
-		top: 10px;
+		right: 16px;
+		bottom: 10px;
+		top: inherit;
 	}
 }

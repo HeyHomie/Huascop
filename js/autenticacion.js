@@ -1,45 +1,100 @@
-//Iniciar session con google
+//Variables globales
+//-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+var pathname = window.location.pathname;
 
+
+//Metodos
+//-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+firebase.auth().onAuthStateChanged((user) => {
+
+  if (user) {
+    if (pathname === '/login.html' || pathname === '/Huascop/login.html') {
+      if (window.location.hostname === '127.0.0.1') {
+        window.location = "/index.html";
+      } else {
+        window.location = "https://heyhomie.github.io/Huascop/";
+      }
+    }
+
+    if (pathname === '/index.html' || pathname === '/' || pathname === '/Huascop/' || pathname === '/Huascop/index.html') {
+      document.querySelector('#nombreUsuario').innerHTML = user.displayName;
+      document.querySelector('#imgUser').innerHTML = `<img src="${user.photoURL}" />`;
+    }
+
+
+  } else {
+    if (pathname === '/index.html' || pathname === '/' || pathname === '/Huascop/' || pathname === '/Huascop/index.html') {
+
+      if (window.location.hostname === '127.0.0.1') {
+        window.location = "/login.html";
+      } else {
+        window.location = "https://heyhomie.github.io/Huascop/login.html";
+      }
+    }
+  }
+});
+
+const verificarExistenciaUsuario = (name, email) => {
+
+  const buscarUsuario = db.collection('col-usuarios')
+    .doc('usuario' + email + 'homie');
+
+  buscarUsuario
+    .onSnapshot((querySnapshot) => {
+      if (!querySnapshot.exists) {
+        const respuesta = {
+          nombre: name,
+          email: email
+        }
+        registrarUsuario(respuesta);
+      }
+    });
+}
+
+function registrarUsuario(respuesta) {
+
+  return new Promise((resolve, reject) => {
+    db.collection('col-usuarios').doc("usuario" + respuesta.email + "homie").set(respuesta)
+      .then(function (docRef) {
+        resolve(respuesta)
+      })
+      .catch(function (error) {
+
+        reject(error)
+      })
+  });
+}
+
+const cerrarSesion = () => {
+  firebase.auth().signOut().then(function () {
+    if (window.location.hostname === '127.0.0.1') {
+      window.location = "/login.html";
+    } else {
+      window.location = "https://heyhomie.github.io/Huascop/login.html";
+    }
+  }).catch(function (error) {
+    // An error happened.
+  });
+}
+
+//Implementaciones 
+//-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+//Iniciar session con google
 const google = () => {
+
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().languageCode = 'es';
 
   firebase.auth().signInWithPopup(provider).then(function (result) {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = result.credential.accessToken;
-    // The signed-in user info.
-    var user = result.user;
-    var email = result.user.email;
-
-    console.log(email, user);
-
-    // console.log(result.user)
-
-    // if (email == 'clasmap.mx@gmail.com') {
-    //   window.location = "./index.html";
-    // } else if (email != 'clasmap.mx@gmail.com') {
-    //   window.location = "./login.html";
-    // }
-
-
+    verificarExistenciaUsuario(result.user.displayName, result.user.email);
+    if (window.location.hostname === '127.0.0.1') {
+      window.location = "/index.html";
+    } else {
+      window.location = "https://heyhomie.github.io/Huascop/";
+    }
   }).catch(function (error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // The email of the user's account used.
-    var email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
-    var credential = error.credential;
-    // ...
-  });
-}
-
-
-function cerrarSesion() {
-  firebase.auth().signOut().then(function () {
-    // Sign-out successful.
-    window.location = "./login.html";
-  }).catch(function (error) {
-    // An error happened.
+    console.log(error);
   });
 }
