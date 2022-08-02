@@ -1,6 +1,6 @@
 //Mostrar datos
 
-db.collection("col-stagings").orderBy("proyecto", "desc")
+db.collection("col-stagings").orderBy("proyecto", "desc").orderBy("nombre", "asc")
   .onSnapshot((querySnapshot) => {
     document.querySelector('#list_stagings').innerHTML = '';
     querySnapshot.forEach((doc) => {
