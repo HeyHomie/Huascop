@@ -3,9 +3,11 @@
 var pathname = window.location.pathname;
 const miStorageGlobal = window.localStorage;
 
-miStorageGlobal.removeItem('aviso_huascop');
 //Metodos
 //-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+if (pathname === '/login.html' || pathname === '/Huascop/login.html') {
+  miStorageGlobal.removeItem('aviso_huascop');
+}
 
 firebase.auth().onAuthStateChanged((user) => {
 
