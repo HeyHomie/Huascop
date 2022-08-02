@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
       text: 'Ahora solo se tendrán como máximo 2 stagins por proyecto, por lo que es importante que al momento que termines de probar lo dejes de usar para que otros compañeros puedan hacer sus pruebas  ',
       width: 600,
       confirmButtonText: 'Entendido',
-      padding: '3em',
+      padding: '1em',
       color: '#1f1c24',
       background: '#fff url(/images/trees.png)',
       backdrop: `
