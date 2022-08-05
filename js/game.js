@@ -7,9 +7,9 @@ var swiper = new Swiper('.product-slider', {
         nextEl: '.next',
         prevEl: '.prev'
     },
-    // mousewheel: {
-    //     // invert: false
-    // },
+    mousewheel: {
+        invert: false
+    },
     on: {
         init: function () {
             var index = this.activeIndex;
@@ -49,6 +49,3 @@ swiper.on('slideChange', function () {
     }
 });
 
-$(".js-fav").on("click", function () {
-    $(this).find('.heart').toggleClass("is-active");
-});
