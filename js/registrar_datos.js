@@ -30,7 +30,10 @@ const validarFormStaging = () => {
       en_uso: true,
       desarrollador: user.displayName,
       desarrollador_email: user.email,
-      imagen: user.photoURL
+      imagen: user.photoURL,
+      grupo_fotos: [user.photoURL],
+      grupo_nombres: [user.displayName],
+      grupo_correo: [user.email]
     }
     verificarExistenciaStaging(staging);
 
@@ -78,5 +81,38 @@ function registrarStaging(staging) {
       .catch(function (error) {
         reject(error)
       })
+  });
+}
+
+//Grupos
+
+const unirseAunGrupo = (id) => {
+  firebase.auth().onAuthStateChanged((user) => {
+    const staging = db.collection("col-stagings").doc(id);
+    staging.get().then((doc) => {
+      if (doc.exists) {
+        grupoCorreoArray = doc.data().grupo_correo
+
+        return staging.update({
+          grupo_fotos: firebase.firestore.FieldValue.arrayUnion(user.photoURL),
+          grupo_nombres: firebase.firestore.FieldValue.arrayUnion(user.displayName),
+          grupo_correo: firebase.firestore.FieldValue.arrayUnion(user.email)
+        }).then(() => {
+          const myModalEl = document.getElementById('unirseAunGrupo');
+          const modal = bootstrap.Modal.getInstance(myModalEl)
+          modal.hide();
+          Swal.fire({
+            icon: 'success',
+            title: 'Echo',
+            html: `Te has unido al grupo del staging <strong>${doc.data().nombre}</strong>`,
+            confirmButtonText: 'Aceptar',
+          });
+          console.log("Document successfully updated!");
+        })
+
+      }
+    }).catch((error) => {
+      console.log("Error getting document:", error);
+    });
   });
 }

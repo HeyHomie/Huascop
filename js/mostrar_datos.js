@@ -1,16 +1,24 @@
 //Mostrar datos
 
-db.collection("col-stagings").orderBy("proyecto", "desc").orderBy("nombre", "asc")
+//onclick = "EntrarAGrupo('${doc.id}', '${doc.data().nombre}')"
+db.collection("col-stagings").orderBy("proyecto", "desc").orderBy("nombre", "desc")
   .onSnapshot((querySnapshot) => {
     document.querySelector('#list_stagings').innerHTML = '';
+    contador = 0;
     querySnapshot.forEach((doc) => {
-
       if (doc.data().en_uso) {
+        contador = contador + 1;
         document.querySelector('#list_stagings').innerHTML += `
          <div class="project-box-wrapper">
             <div class="project-box project-activo">
               <div class="project-box-header">
-                <span></span>
+                <div class="more-wrapper" style="margin-left: 0.7rem">
+                  <button type="button" id="btnVerUnirseGrupo" class="project-btn-more" data-bs-toggle="modal" data-bs-target="#unirseAunGrupo" onclick="mostrarDatosDeGrupo('${doc.id}')">
+                    <div class="delete-content" style="color: #bfbfbf;">
+                        <i class="fa-solid fa-people-group"></i>
+                      </div>
+                  </button>
+                </div>
                 <div class="more-wrapper">
                   <button class="project-btn-more" onclick="eliminarStaging('${doc.id}', '${doc.data().nombre}')">
                     <div class="delete-content" style="color: #bfbfbf;">
@@ -33,13 +41,12 @@ db.collection("col-stagings").orderBy("proyecto", "desc").orderBy("nombre", "asc
               <div class="project-box-footer">
                 <span>${doc.data().desarrollador}</span>
                 <div class="participants">
-                  <img
-                    src="${doc.data().imagen}"
-                    alt="participant">                           
-                </div>              
+                  <span class="count_grupo"><small>${doc.data().grupo_fotos.length}</small></span>
+                  <div id="participantes_${contador}"></div>
+                </div>
               </div>
               <div class="project-box-footer">
-              <div></div>                              
+              <div></div>
                 <div class="days-left" style="color: #34c471;">
                   <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="${doc.data().nombre}_id" checked onclick="cambiarEstatusStaging('${doc.id}', '${doc.data().nombre}_id')">
@@ -50,10 +57,15 @@ db.collection("col-stagings").orderBy("proyecto", "desc").orderBy("nombre", "asc
             </div>
           </div>
         `;
-
+        fotosArray = doc.data().grupo_fotos;
+        fotosArray.forEach(function (foto, index) {
+          if (index <= 10) {
+            document.querySelector(`#participantes_${contador}`).innerHTML += `<img src="${foto}" alt="participant">`;
+          }
+        }, this);
       } else {
         document.querySelector('#list_stagings').innerHTML += `
-               <div class="project-box-wrapper">
+          <div class="project-box-wrapper">
             <div class="project-box project-inactivo">
               <div class="project-box-header">
                 <span></span>
@@ -102,6 +114,7 @@ db.collection("col-stagings").orderBy("proyecto", "desc").orderBy("nombre", "asc
   });
 
 
+
 db.collection("col-stagings").where('en_uso', '==', true)
   .onSnapshot((querySnapshot) => {
     document.querySelector('#stagings_activos').innerHTML = querySnapshot.docs.length;
@@ -116,3 +129,62 @@ db.collection("col-stagings")
   .onSnapshot((querySnapshot) => {
     document.querySelector('#total_stagings').innerHTML = querySnapshot.docs.length;
   });
+
+// Grupos
+const mostrarDatosDeGrupo = (id) => {
+  const staging = db.collection("col-stagings").doc(id);
+
+  staging.get().then((doc) => {
+    if (doc.exists) {
+      firebase.auth().onAuthStateChanged((user) => {
+        grupoCorreoArray = doc.data().grupo_correo;
+
+        if (grupoCorreoArray.includes(user.email)) {
+          const unidoAunGrupoClassArray = document.getElementsByClassName("unidoAunGrupoClass");
+          for (let i = 0; i < unidoAunGrupoClassArray.length; i++) {
+            unidoAunGrupoClassArray[i].classList.remove('d-none');
+          }
+          const unirseAunGrupoClassArray2 = document.getElementsByClassName("unirseAunGrupoClass");
+          for (let i = 0; i < unirseAunGrupoClassArray2.length; i++) {
+            unirseAunGrupoClassArray2[i].classList.add('d-none');
+          }
+        } else {
+          const unirseAunGrupoClassArray = document.getElementsByClassName("unirseAunGrupoClass");
+          for (let i = 0; i < unirseAunGrupoClassArray.length; i++) {
+            unirseAunGrupoClassArray[i].classList.remove('d-none');
+          }
+          const unidoAunGrupoClassArray2 = document.getElementsByClassName("unidoAunGrupoClass");
+          for (let i = 0; i < unidoAunGrupoClassArray2.length; i++) {
+            unidoAunGrupoClassArray2[i].classList.add('d-none');
+          }
+        }
+
+        document.querySelector('#grupoStaging').innerHTML = doc.data().nombre;
+        document.querySelector('#grupoProyecto').innerHTML = doc.data().proyecto;
+        document.querySelector('#addBtnGrupo').innerHTML = `<button class="btn btn-outline-primary" type="button" onclick="unirseAunGrupo('${id}')">Sí, quiero unirme</button>`;
+        document.querySelector('#eliminarBtnGrupo').innerHTML = `<button class="btn btn-outline-primary mb-4" type="button" onclick="salirseAunGrupo('${id}','${user.email}')">Sí, quiero salirme</button>`;
+        if (doc.data().nombre === 'staging1-homiemx') {
+          document.querySelector('#ramaStaging').innerHTML = 'test_staging1';
+          document.querySelector('#ramaStaging2').innerHTML = 'test_staging1';
+          document.querySelector('#ramaStaging3').innerHTML = 'test_staging1';
+          document.querySelector('#ramaStaging4').innerHTML = 'test_staging1';
+          document.querySelector('#stagingNameCode').innerHTML = 'staging1-homiemx';
+          document.querySelector('#ejemploCode').innerHTML = 'git push origin test_staging1:staging/staging1 --force';
+
+
+        }
+        else if (doc.data().nombre === 'staging2-homiemx') {
+          document.querySelector('#ramaStaging').innerHTML = 'test_staging2';
+          document.querySelector('#ramaStaging2').innerHTML = 'test_staging2';
+          document.querySelector('#ramaStaging3').innerHTML = 'test_staging2';
+          document.querySelector('#ramaStaging4').innerHTML = 'test_staging2';
+          document.querySelector('#stagingNameCode').innerHTML = 'staging2-homiemx';
+          document.querySelector('#ejemploCode').innerHTML = 'git push origin test_staging2:staging/staging2 --force';
+        }
+      });
+    }
+
+  }).catch((error) => {
+    console.log("Error getting document:", error);
+  });
+}

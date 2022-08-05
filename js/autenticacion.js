@@ -7,6 +7,7 @@ const miStorageGlobal = window.localStorage;
 //-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 if (pathname === '/login.html' || pathname === '/Huascop/login.html') {
   miStorageGlobal.removeItem('aviso_huascop');
+  miStorageGlobal.removeItem('mejoras_huascop');
 }
 
 firebase.auth().onAuthStateChanged((user) => {

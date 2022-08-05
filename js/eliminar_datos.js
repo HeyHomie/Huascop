@@ -38,3 +38,38 @@ const eliminarStaging = (id, nombre) => {
     }
   })
 }
+
+
+const salirseAunGrupo = (id, email) => {
+  const staging = db.collection("col-stagings").doc(id);
+
+  staging.get().then((doc) => {
+
+    grupoFotosArray = doc.data().grupo_fotos;
+    grupoNombresArray = doc.data().grupo_nombres;
+    grupoCorreoArray = doc.data().grupo_correo;
+
+    index = grupoCorreoArray.indexOf(email);
+    grupoFotosArray.splice(index, 1);
+    grupoNombresArray.splice(index, 1);
+    grupoCorreoArray.splice(index, 1);
+
+    staging.set({
+      grupo_fotos: grupoFotosArray,
+      grupo_nombres: grupoNombresArray,
+      grupo_correo: grupoCorreoArray
+    }, { merge: true });
+
+    const myModalEl = document.getElementById('unirseAunGrupo');
+    const modal = bootstrap.Modal.getInstance(myModalEl)
+    modal.hide();
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Echo',
+      html: `Te has salido del grupo del staging <strong>${doc.data().nombre}</strong>`,
+      confirmButtonText: 'Aceptar',
+    });
+  });
+
+}

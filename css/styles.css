@@ -66,7 +66,23 @@ button,
 a {
 	cursor: pointer;
 }
-
+code {
+	font-size: 0.875em;
+	color: #d58f3d;
+	background-color: #292d30;
+	word-wrap: break-word;
+	padding: 0.2rem 0.7rem;
+}
+.btn-outline-primary,
+.btn-outline-primary:hover,
+.btn-outline-primary::selection,
+.btn-outline-primary:active,
+.btn-outline-primary:focus {
+	color: #5d5d5d !important;
+	background-color: transparent !important;
+	border-color: #5d5d5d !important;
+	box-shadow: none !important;
+}
 .app-container {
 	width: 100%;
 	display: flex;
@@ -769,6 +785,14 @@ a {
 	position: absolute;
 	top: 25%;
 	right: 28%;
+}
+
+.delete-content i {
+	position: absolute;
+	top: 25%;
+	right: 18%;
+	font-size: 1.1rem;
+	color: #34c47187;
 }
 
 .mode-switch.active .moon {
