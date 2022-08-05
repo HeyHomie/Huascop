@@ -61,13 +61,13 @@ document.addEventListener('DOMContentLoaded', function () {
     await Queue.fire({
       title: 'Mejora #1',
       currentProgressStep: 0,
-      html: `<p>Ahora múltiples usuarios podrán usar un mismo staging</p><br><video class="w-100" src="../videos/mejora1.mov" autoplay>Tu navegador no admite el elemento <code>video</code>.</video>`,
+      html: `<p>Ahora múltiples usuarios podrán usar un mismo staging</p><br><video class="w-100" src="https://heyhomie.github.io/Huascop/videos/mejora1.mov" autoplay>Tu navegador no admite el elemento <code>video</code>.</video>`,
       // optional class to show fade-in backdrop animation which was disabled in Queue mixin
       showClass: { backdrop: 'swal2-noanimation' },
     })
     await Queue.fire({
       title: 'Mejora #2',
-      html: `<p>Ahora podrás quitarte por unos minutos el estrés en lo que descansas la mente y juegas unos minutos podrás sumar score y ver quien tiene mayor puntos ganados en los juegos. Todos los developers podran jugar y el score se estará guardando</p><br><video class="w-100" src="../videos/mejora2.mov" autoplay >Tu navegador no admite el elemento <code>video</code>.</video>`,
+      html: `<p>Ahora podrás quitarte por unos minutos el estrés en lo que descansas la mente y juegas unos minutos podrás sumar score y ver quien tiene mayor puntos ganados en los juegos. Todos los developers podran jugar y el score se estará guardando</p><br><video class="w-100" src="https://heyhomie.github.io/Huascop/videos/mejora2.mov" autoplay >Tu navegador no admite el elemento <code>video</code>.</video>`,
       currentProgressStep: 1
     })
   }
