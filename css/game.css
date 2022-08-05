@@ -490,6 +490,7 @@ a {
 	font-size: 14px;
 	letter-spacing: 2px;
 	cursor: pointer;
+	z-index: 999;
 }
 .product-slider__cart:hover {
 	color: #fff;
