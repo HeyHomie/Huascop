@@ -265,6 +265,7 @@
 	justify-content: center;
 	align-items: flex-start;
 	margin: 12px;
+	margin-top: -9px;
 }
 
 .cta-text {
