@@ -28,6 +28,8 @@ const validarFormStaging = () => {
       fecha,
       nombre: nombre.replace('.', '').trim().toLowerCase(),
       en_uso: true,
+      rama_pruebas: '',
+      rama_push: '',
       desarrollador: user.displayName,
       desarrollador_email: user.email,
       imagen: user.photoURL,

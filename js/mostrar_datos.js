@@ -163,24 +163,21 @@ const mostrarDatosDeGrupo = (id) => {
         document.querySelector('#grupoProyecto').innerHTML = doc.data().proyecto;
         document.querySelector('#addBtnGrupo').innerHTML = `<button class="btn btn-outline-primary" type="button" onclick="unirseAunGrupo('${id}')">Sí, quiero unirme</button>`;
         document.querySelector('#eliminarBtnGrupo').innerHTML = `<button class="btn btn-outline-primary mb-4" type="button" onclick="salirseAunGrupo('${id}','${user.email}')">Sí, quiero salirme</button>`;
-        if (doc.data().nombre === 'staging1-homiemx') {
-          document.querySelector('#ramaStaging').innerHTML = 'test_staging1';
-          document.querySelector('#ramaStaging2').innerHTML = 'test_staging1';
-          document.querySelector('#ramaStaging3').innerHTML = 'test_staging1';
-          document.querySelector('#ramaStaging4').innerHTML = 'test_staging1';
-          document.querySelector('#stagingNameCode').innerHTML = 'staging1-homiemx';
-          document.querySelector('#ejemploCode').innerHTML = 'git push origin test_staging1:staging/staging1 --force';
+
+        document.querySelector('#ramaStaging').innerHTML = doc.data().rama_pruebas === undefined ? 'Aún no se crea rama' : doc.data().rama_pruebas;
+        document.querySelector('#ramaStaging2').innerHTML = doc.data().rama_pruebas === undefined ? 'Aún no se crea rama' : doc.data().rama_pruebas;
+        document.querySelector('#ramaStaging3').innerHTML = doc.data().rama_pruebas === undefined ? 'Aún no se crea rama' : doc.data().rama_pruebas;
+        document.querySelector('#ramaStaging4').innerHTML = doc.data().rama_pruebas === undefined ? 'Aún no se crea rama' : doc.data().rama_pruebas;
+        document.querySelector('#stagingNameCode').innerHTML = doc.data().rama_push === undefined ? 'Aún no se crea rama' : doc.data().rama_push;
+
+        if (doc.data().rama_pruebas !== undefined) {
+          const stagingName = doc.data().rama_pruebas.replace('test_', '');
+          document.querySelector('#ejemploCode').innerHTML = `git push origin ${doc.data().rama_pruebas}:staging/${stagingName} --force`;
+        } else {
+          document.querySelector('#ejemploCode').innerHTML = 'No hay ejemplo';
+        }
 
 
-        }
-        else if (doc.data().nombre === 'staging2-homiemx') {
-          document.querySelector('#ramaStaging').innerHTML = 'test_staging2';
-          document.querySelector('#ramaStaging2').innerHTML = 'test_staging2';
-          document.querySelector('#ramaStaging3').innerHTML = 'test_staging2';
-          document.querySelector('#ramaStaging4').innerHTML = 'test_staging2';
-          document.querySelector('#stagingNameCode').innerHTML = 'staging2-homiemx';
-          document.querySelector('#ejemploCode').innerHTML = 'git push origin test_staging2:staging/staging2 --force';
-        }
       });
     }
 
