@@ -185,3 +185,81 @@ const mostrarDatosDeGrupo = (id) => {
     console.log("Error getting document:", error);
   });
 }
+
+
+// Games - Mostrar scores
+
+db.collection("col-stack").orderBy("puntos", "desc")
+  .onSnapshot((querySnapshot) => {
+    let stack = document.querySelector('#scoreStackId');
+    stack.innerHTML = '';
+    querySnapshot.forEach((doc) => {
+      stack.innerHTML += `
+        <div class="score-box">
+              <img src="${doc.data().foto}" alt="profile image">
+              <div class="score-content">
+                <div class="score-header">
+                  <div class="name">${doc.data().nombre}</div>
+                    <div class="points-checkbox">
+                      <input type="checkbox" id="star-1">
+                      <label for="star-1">
+                        ${doc.data().puntos}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      `;
+    });
+  });
+
+db.collection("col-stick-hero").orderBy("puntos", "desc")
+  .onSnapshot((querySnapshot) => {
+    let stack = document.querySelector('#scoreStickHeroId');
+    stack.innerHTML = '';
+    querySnapshot.forEach((doc) => {
+      stack.innerHTML += `
+        <div class="score-box">
+              <img src="${doc.data().foto}" alt="profile image">
+              <div class="score-content">
+                <div class="score-header">
+                  <div class="name">${doc.data().nombre}</div>
+                    <div class="points-checkbox">
+                      <input type="checkbox" id="star-1">
+                      <label for="star-1">
+                        ${doc.data().puntos}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      `;
+    });
+  });
+
+db.collection("col-crossy-road").orderBy("puntos", "desc")
+  .onSnapshot((querySnapshot) => {
+    let stack = document.querySelector('#scoreCrossyRoadId');
+    stack.innerHTML = '';
+    querySnapshot.forEach((doc) => {
+      stack.innerHTML += `
+        <div class="score-box">
+              <img src="${doc.data().foto}" alt="profile image">
+              <div class="score-content">
+                <div class="score-header">
+                  <div class="name">${doc.data().nombre}</div>
+                    <div class="points-checkbox">
+                      <input type="checkbox" id="star-1">
+                      <label for="star-1">
+                        ${doc.data().puntos}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      `;
+    });
+  });
