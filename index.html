@@ -13,9 +13,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 
 
-  <link rel="stylesheet" href="./css/game.css?ver=1.0.16">
-  <link rel="stylesheet" href="./css/grupos.css?ver=1.0.16">
-  <link rel="stylesheet" href="./css/styles.css?ver=1.0.16">
+  <link rel="stylesheet" href="./css/game.css?ver=1.0.17">
+  <link rel="stylesheet" href="./css/grupos.css?ver=1.0.17">
+  <link rel="stylesheet" href="./css/styles.css?ver=1.0.17">
 
 </head>
 
@@ -383,6 +383,28 @@
   </div>
 
   <!-- Modal -->
+  <div class="modal fade" id="verParticipantes" tabindex="-1" aria-labelledby="verParticipantesLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content modal-content-grupos">
+        <div class="modal-header ">
+          <h5 class="modal-title" id="verParticipantesLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="score-section">
+            <div class="score-section-header">
+              <p>Desarrolladores de este grupo</p>
+            </div>
+            <div class="scores" id="listParticipantes">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="verScore" tabindex="-1" aria-labelledby="verScoreLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
       <div class="modal-content modal-content-grupos">
@@ -603,20 +625,20 @@
   <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
 
-  <script src='./js/conexion.js?ver=1.0.16'></script>
-  <script src='./js/autenticacion.js?ver=1.0.16'></script>
+  <script src='./js/conexion.js?ver=1.0.17'></script>
+  <script src='./js/autenticacion.js?ver=1.0.17'></script>
 
-  <script src='./js/grupos.js?ver=1.0.16'></script>
-  <script src='./js/tab.js?ver=1.0.16'></script>
-  <script src='./js/mostrar_datos.js?ver=1.0.16'></script>
-  <script src='./js/registrar_datos.js?ver=1.0.16'></script>
-  <script src='./js/actualizar_datos.js?ver=1.0.16'></script>
+  <script src='./js/grupos.js?ver=1.0.17'></script>
+  <script src='./js/tab.js?ver=1.0.17'></script>
+  <script src='./js/mostrar_datos.js?ver=1.0.17'></script>
+  <script src='./js/registrar_datos.js?ver=1.0.17'></script>
+  <script src='./js/actualizar_datos.js?ver=1.0.17'></script>
   <script src='./js/eliminar_datos.js'></script>
-  <script src='./js/busqueda.js?ver=1.0.16'></script>
+  <script src='./js/busqueda.js?ver=1.0.17'></script>
 
-  <script src='./js/index.js?ver=1.0.16'></script>
+  <script src='./js/index.js?ver=1.0.17'></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src='./js/game.js?ver=1.0.16'></script>
+  <script src='./js/game.js?ver=1.0.17'></script>
 </body>
 
 </html>

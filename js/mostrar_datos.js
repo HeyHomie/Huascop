@@ -42,7 +42,9 @@ db.collection("col-stagings").orderBy("proyecto", "desc").orderBy("nombre", "des
                 <span>${doc.data().desarrollador}</span>
                 <div class="participants">
                   <span class="count_grupo"><small>${doc.data().grupo_fotos.length}</small></span>
-                  <div id="participantes_${contador}"></div>
+                  <a data-bs-toggle="modal" data-bs-target="#verParticipantes" onclick="mostrarListaDesarrolladores('${doc.id}')">
+                    <div id="participantes_${contador}"></div>
+                  </a>
                 </div>
               </div>
               <div class="project-box-footer">
@@ -263,3 +265,37 @@ db.collection("col-crossy-road").orderBy("puntos", "desc")
       `;
     });
   });
+
+const mostrarListaDesarrolladores = (id) => {
+  const staging = db.collection("col-stagings").doc(id);
+  let lista = document.querySelector('#listParticipantes');
+
+  lista.innerHTML = '';
+  staging.get().then((doc) => {
+    if (doc.exists) {
+      grupoNombresArray = doc.data().grupo_nombres;
+      grupoFotosArray = doc.data().grupo_fotos;
+
+      grupoFotosArray.forEach(function (foto, index) {
+        lista.innerHTML += `
+        <div class="score-box">
+              <img src="${foto}" alt="profile image">
+              <div class="score-content">
+                <div class="score-header">
+                  <div class="name">${grupoNombresArray[index]}</div>
+                    <div class="points-checkbox">
+                      <input type="checkbox" id="star-1">                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      `;
+      }, this);
+    }
+
+  }).catch((error) => {
+    console.log("Error getting document:", error);
+  });
+
+}
